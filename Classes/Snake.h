@@ -242,34 +242,63 @@ void SnakeGame::PickFruit()
 void SnakeGame::Draw()
 {
     system("cls");
-    for (int i = 0; i < heigth; i++)
+    for (int i = -1; i <= heigth; i++)
     {
-        for (int j = 0; j < width; j++)
+        for (int j = -1; j <= width; j++)
         {
-            bool empty = true;
-            SnakeCell *cell = &snake.head;
-            for (int n = 0; n < snake.GetLength(); n++)
+            if (i == -1 || i == heigth || j == -1 || j == width)
             {
-                if (cell->x == j && cell->y == i)
+                if (i == -1)
                 {
-                    if (cell == &snake.head)
-                        std::cout << "YY";
+                    if (j == -1)
+                        std::cout << char(201) << char(205);
+                    else if (j == width)
+                        std::cout << char(205) << char(187);
                     else
-                        std::cout << "[]";
-                    empty = false;
-                    break;
+                        std::cout << char(205) << char(205);
                 }
-                if (cell->next)
-                    cell = cell->next;
-            }
-            if (empty)
-            {
-                if (fruit.x == j && fruit.y == i)
+                else if (i == heigth)
                 {
-                    std::cout << "oO";
+                    if (j == -1)
+                        std::cout << char(200) << char(205);
+                    else if (j == width)
+                        std::cout << char(205) << char(188);
+                    else
+                        std::cout << char(205) << char(205);
                 }
+                else if (j == -1)
+                    std::cout << char(186) << " ";
                 else
-                    std::cout << "..";
+                    std::cout << " " << char(186);
+            }
+            else
+            {
+
+                bool empty = true;
+                SnakeCell *cell = &snake.head;
+                for (int n = 0; n < snake.GetLength(); n++)
+                {
+                    if (cell->x == j && cell->y == i)
+                    {
+                        if (cell == &snake.head)
+                            std::cout << "YY";
+                        else
+                            std::cout << "[]";
+                        empty = false;
+                        break;
+                    }
+                    if (cell->next)
+                        cell = cell->next;
+                }
+                if (empty)
+                {
+                    if (fruit.x == j && fruit.y == i)
+                    {
+                        std::cout << "oO";
+                    }
+                    else
+                        std::cout << "  ";
+                }
             }
         }
         std::cout << std::endl;
@@ -277,6 +306,9 @@ void SnakeGame::Draw()
 }
 void SnakeGame::GameLoop()
 {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(NULL);
+    std::cout.tie(NULL);
     while (!end)
     {
         Sleep(100);
